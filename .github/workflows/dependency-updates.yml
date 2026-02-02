@@ -1,0 +1,93 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run every Sunday at midnight
+  workflow_dispatch:
+    inputs:
+      update_type:
+        description: 'Type of update'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - security
+          - minor
+
+jobs:
+  update-dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Update go modules
+        run: |
+          go get -u ./...
+          go mod tidy
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(deps): update go dependencies'
+          title: 'chore(deps): Update Go dependencies'
+          body: |
+            ## Dependency Updates
+            
+            This PR updates Go module dependencies.
+            
+            ### Type: ${{ github.event.inputs.update_type || 'all' }}
+            
+            Please review the changes and ensure all tests pass.
+          branch: deps/go-modules-update
+          delete-branch: true
+          labels: dependencies, automated
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Run go mod verify
+        run: go mod verify
+
+      - name: Run nancy (OSS Index)
+        uses: sonatype-nexus-community/nancy-github-action@main
+        with:
+          nancyVersion: v1.0.42
+
+      - name: Run govulncheck
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck ./...
+
+      - name: Create issue if vulnerabilities found
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Security vulnerabilities detected in dependencies',
+              body: 'Automated security scan detected vulnerabilities. Please review and update.',
+              labels: ['security', 'dependencies']
+            })
