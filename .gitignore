@@ -1,0 +1,207 @@
+# ============================================
+# REPOGRAPH PLATFORM - GITIGNORE
+# ============================================
+
+# ============================================
+# ENVIRONMENT FILES
+# ============================================
+.env
+.env.*
+.env.local
+.env.development
+.env.staging
+.env.production
+*.env
+
+# ============================================
+# LOGS & TEMPORARY
+# ============================================
+*.log
+logs/
+*.tmp
+*.swp
+*.swo
+
+# ============================================
+# BINARIES & BUILD ARTIFACTS
+# ============================================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+build/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+coverage.html
+
+# ============================================
+# GO SPECIFIC
+# ============================================
+go.work
+go.work.sum
+vendor/
+
+# ============================================
+# IDE & EDITOR
+# ============================================
+.idea/
+.vscode/
+*.iml
+
+# ============================================
+# SECURITY - NEVER COMMIT THESE FILES
+# ============================================
+
+# Credentials directory
+credentials/
+!credentials/README.md
+
+# API Keys and Secrets
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.jks
+*.keystore
+*.truststore
+
+# Service Account files
+*-service-account.json
+*_service_account.json
+service-account*.json
+*-credentials.json
+*_credentials.json
+
+# Google Cloud credentials
+gcloud-*.json
+google-*.json
+*-firebase-adminsdk-*.json
+
+# Azure credentials
+azure-*.json
+*.publishsettings
+
+# AWS credentials
+.aws/
+aws-*.json
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.ppk
+
+# Tokens
+*.token
+*_token
+*-token
+auth_token*
+access_token*
+refresh_token*
+
+# Secrets files
+secrets/
+*.secret
+*.secrets
+secrets.yaml
+secrets.yml
+secrets.json
+
+# Kubernetes secrets
+*-secret.yaml
+*-secret.yml
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+
+# Ansible vault
+*.vault
+vault.yml
+vault.yaml
+
+# ============================================
+# DATA DIRECTORY - User documents
+# ============================================
+
+# Data directory (contains user documents)
+data/
+!data/README.md
+!data/.gitkeep
+
+# Diagrams and documents (redundant but explicit)
+data/diagrams/
+data/documents/
+data/uploads/
+data/processed/
+
+# ============================================
+# DATABASE & CACHE
+# ============================================
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Redis dumps
+dump.rdb
+*.rdb
+
+# PostgreSQL
+*.sql.backup
+
+# ============================================
+# DOCKER
+# ============================================
+*.pid
+.docker/
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+tmp/
+temp/
+.tmp/
+.temp/
+.cache/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# ============================================
+# OS SPECIFIC
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
