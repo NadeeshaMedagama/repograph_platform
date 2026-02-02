@@ -84,8 +84,10 @@ func Error(msg string, fields ...zap.Field) {
 		Log.Error(msg, fields...)
 	} else {
 		// Fallback to stderr if logger not initialized
-		logger, _ := zap.NewProduction()
-		logger.Error(msg, fields...)
+		logger, err := zap.NewProduction()
+		if err == nil {
+			logger.Error(msg, fields...)
+		}
 	}
 }
 
@@ -94,8 +96,10 @@ func Fatal(msg string, fields ...zap.Field) {
 	if Log != nil {
 		Log.Fatal(msg, fields...)
 	} else {
-		logger, _ := zap.NewProduction()
-		logger.Fatal(msg, fields...)
+		logger, err := zap.NewProduction()
+		if err == nil {
+			logger.Fatal(msg, fields...)
+		}
 	}
 	os.Exit(1)
 }
