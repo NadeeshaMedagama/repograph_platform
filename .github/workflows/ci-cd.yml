@@ -8,15 +8,16 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VERSION: '1.21'
+  GO_VERSION: '1.23'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
-# Required permissions for security scanning
+# Required permissions for security scanning and Docker push
 permissions:
   contents: read
   security-events: write
   actions: read
+  packages: write
 
 jobs:
   lint:
@@ -54,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: ['1.21', '1.22']
+        go-version: ['1.23', '1.24']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
