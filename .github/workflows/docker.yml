@@ -95,23 +95,23 @@ jobs:
           echo "PINECONE_API_KEY=test" >> .env
 
       - name: Build with Docker Compose
-        run: docker-compose -f deployments/docker/docker-compose.yml build
+        run: docker compose -f deployments/docker/docker-compose.yml build
 
       - name: Start services
-        run: docker-compose -f deployments/docker/docker-compose.yml up -d
+        run: docker compose -f deployments/docker/docker-compose.yml up -d
 
       - name: Wait for services
         run: sleep 30
 
       - name: Check service health
         run: |
-          docker-compose -f deployments/docker/docker-compose.yml ps
+          docker compose -f deployments/docker/docker-compose.yml ps
           # Add health check commands here
 
       - name: View logs
         if: always()
-        run: docker-compose -f deployments/docker/docker-compose.yml logs
+        run: docker compose -f deployments/docker/docker-compose.yml logs
 
       - name: Stop services
         if: always()
-        run: docker-compose -f deployments/docker/docker-compose.yml down
+        run: docker compose -f deployments/docker/docker-compose.yml down
