@@ -65,8 +65,16 @@ var indexCmd = &cobra.Command{
 	Short: "Index documents",
 	Long:  `Scan and index documents from a directory into the vector database.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		directory, _ := cmd.Flags().GetString("directory")
-		force, _ := cmd.Flags().GetBool("force")
+		directory, err := cmd.Flags().GetString("directory")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting directory flag: %v\n", err)
+			return
+		}
+		force, err := cmd.Flags().GetBool("force")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting force flag: %v\n", err)
+			return
+		}
 
 		logger.Info("Starting indexing",
 			zap.String("directory", directory),
@@ -92,7 +100,11 @@ var askCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		question := args[0]
-		topK, _ := cmd.Flags().GetInt("top-k")
+		topK, err := cmd.Flags().GetInt("top-k")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting top-k flag: %v\n", err)
+			return
+		}
 
 		logger.Info("Asking question",
 			zap.String("question", question),
@@ -139,7 +151,7 @@ var interactiveCmd = &cobra.Command{
 	Short: "Start interactive query mode",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("🎯 Interactive Query Mode")
-		fmt.Println("Type your questions or 'exit' to quit\n")
+		fmt.Println("Type your questions or 'exit' to quit")
 
 		// TODO: Implement interactive mode
 		fmt.Println("Implementation pending...")
