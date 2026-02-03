@@ -9,7 +9,6 @@ linters:
     - dogsled
     - dupl
     - errcheck
-    - exportloopref
     - gochecknoinits
     - goconst
     - gocritic
@@ -32,6 +31,7 @@ linters:
     - unparam
     - unused
     - whitespace
+    - shadow
 
 linters-settings:
   gocyclo:
@@ -41,8 +41,6 @@ linters-settings:
     min-occurrences: 3
   misspell:
     locale: US
-  govet:
-    check-shadowing: true
   errcheck:
     check-type-assertions: true
     check-blank: true
@@ -63,6 +61,7 @@ issues:
   max-same-issues: 0
 
 output:
-  format: colored-line-number
+  formats:
+    - format: colored-line-number
   print-issued-lines: true
   print-linter-name: true
