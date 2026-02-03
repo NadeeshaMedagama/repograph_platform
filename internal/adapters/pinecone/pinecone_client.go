@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/nadeeshame/repograph_platform/internal/config"
 	"go.uber.org/zap"
@@ -76,9 +77,24 @@ func NewPineconeClient(cfg *config.Config, logger *zap.Logger) (*PineconeClient,
 		return nil, fmt.Errorf("Pinecone index name is required")
 	}
 
-	// Construct host URL
-	host := fmt.Sprintf("https://%s-%s.svc.%s.pinecone.io",
-		cfg.Pinecone.IndexName, cfg.Pinecone.Cloud, cfg.Pinecone.Region)
+	httpClient := &http.Client{}
+	var host string
+
+	// Use provided host or fetch from Pinecone API
+	if cfg.Pinecone.Host != "" {
+		host = cfg.Pinecone.Host
+		if !strings.HasPrefix(host, "https://") {
+			host = "https://" + host
+		}
+		logger.Info("Using provided Pinecone host", zap.String("host", host))
+	} else {
+		// Fetch host from Pinecone control plane API
+		fetchedHost, err := fetchIndexHost(httpClient, cfg.Pinecone.APIKey, cfg.Pinecone.IndexName, logger)
+		if err != nil {
+			return nil, fmt.Errorf("failed to fetch Pinecone index host: %w", err)
+		}
+		host = fetchedHost
+	}
 
 	logger.Info("Connecting to Pinecone",
 		zap.String("index", cfg.Pinecone.IndexName),
@@ -87,10 +103,55 @@ func NewPineconeClient(cfg *config.Config, logger *zap.Logger) (*PineconeClient,
 	return &PineconeClient{
 		apiKey:     cfg.Pinecone.APIKey,
 		host:       host,
-		httpClient: &http.Client{},
+		httpClient: httpClient,
 		config:     &cfg.Pinecone,
 		logger:     logger,
 	}, nil
+}
+
+// fetchIndexHost fetches the actual host URL from Pinecone control plane API
+func fetchIndexHost(httpClient *http.Client, apiKey, indexName string, logger *zap.Logger) (string, error) {
+	url := fmt.Sprintf("https://api.pinecone.io/indexes/%s", indexName)
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.Header.Set("Api-Key", apiKey)
+	req.Header.Set("Accept", "application/json")
+
+	logger.Debug("Fetching Pinecone index info", zap.String("url", url))
+
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return "", fmt.Errorf("API error (status %d): %s", resp.StatusCode, string(body))
+	}
+
+	var indexInfo struct {
+		Host string `json:"host"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&indexInfo); err != nil {
+		return "", fmt.Errorf("failed to decode response: %w", err)
+	}
+
+	if indexInfo.Host == "" {
+		return "", fmt.Errorf("no host returned from Pinecone API")
+	}
+
+	host := indexInfo.Host
+	if !strings.HasPrefix(host, "https://") {
+		host = "https://" + host
+	}
+
+	logger.Info("Fetched Pinecone index host", zap.String("host", host))
+	return host, nil
 }
 
 // UpsertVectors upserts multiple vectors to Pinecone
