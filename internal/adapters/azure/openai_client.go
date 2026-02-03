@@ -60,10 +60,10 @@ type ChatResponse struct {
 // NewOpenAIClient creates a new Azure OpenAI client
 func NewOpenAIClient(cfg *config.Config, logger *zap.Logger) (*OpenAIClient, error) {
 	if cfg.Azure.OpenAIAPIKey == "" {
-		return nil, fmt.Errorf("Azure OpenAI API key is required")
+		return nil, fmt.Errorf("azure OpenAI API key is required")
 	}
 	if cfg.Azure.OpenAIEndpoint == "" {
-		return nil, fmt.Errorf("Azure OpenAI endpoint is required")
+		return nil, fmt.Errorf("azure OpenAI endpoint is required")
 	}
 
 	return &OpenAIClient{
@@ -109,7 +109,7 @@ func (c *OpenAIClient) GenerateEmbedding(ctx context.Context, text string) ([]fl
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
+		body, _ := io.ReadAll(resp.Body) //nolint:errcheck
 		return nil, fmt.Errorf("API error (status %d): %s", resp.StatusCode, string(body))
 	}
 
@@ -173,7 +173,7 @@ func (c *OpenAIClient) GenerateSummary(ctx context.Context, text string) (string
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
+		body, _ := io.ReadAll(resp.Body) //nolint:errcheck
 		return "", fmt.Errorf("API error (status %d): %s", resp.StatusCode, string(body))
 	}
 
@@ -228,7 +228,7 @@ func (c *OpenAIClient) ChatCompletion(ctx context.Context, systemPrompt, userMes
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
+		body, _ := io.ReadAll(resp.Body) //nolint:errcheck
 		return "", fmt.Errorf("API error (status %d): %s", resp.StatusCode, string(body))
 	}
 
