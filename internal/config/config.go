@@ -164,56 +164,57 @@ func setDefaults() {
 }
 
 func bindEnvVariables() {
-	// Note: viper.BindEnv doesn't return errors, it only logs warnings internally
+	// viper.BindEnv binds environment variables to configuration keys
+	// These bindings are used when reading config values
 
 	// Azure OpenAI
-	_ = viper.BindEnv("azure.openai_api_key", "AZURE_OPENAI_API_KEY")
-	_ = viper.BindEnv("azure.openai_endpoint", "AZURE_OPENAI_ENDPOINT")
-	_ = viper.BindEnv("azure.openai_embeddings_version", "AZURE_OPENAI_EMBEDDINGS_VERSION")
-	_ = viper.BindEnv("azure.openai_embeddings_deployment", "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT")
-	_ = viper.BindEnv("azure.openai_api_version", "AZURE_OPENAI_API_VERSION")
-	_ = viper.BindEnv("azure.openai_chat_deployment", "AZURE_OPENAI_CHAT_DEPLOYMENT")
+	viper.BindEnv("azure.openai_api_key", "AZURE_OPENAI_API_KEY")                             //nolint:errcheck
+	viper.BindEnv("azure.openai_endpoint", "AZURE_OPENAI_ENDPOINT")                           //nolint:errcheck
+	viper.BindEnv("azure.openai_embeddings_version", "AZURE_OPENAI_EMBEDDINGS_VERSION")       //nolint:errcheck
+	viper.BindEnv("azure.openai_embeddings_deployment", "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT") //nolint:errcheck
+	viper.BindEnv("azure.openai_api_version", "AZURE_OPENAI_API_VERSION")                     //nolint:errcheck
+	viper.BindEnv("azure.openai_chat_deployment", "AZURE_OPENAI_CHAT_DEPLOYMENT")             //nolint:errcheck
 
 	// Google
-	_ = viper.BindEnv("google.vision_api_key", "GOOGLE_VISION_API_KEY")
-	_ = viper.BindEnv("google.application_credentials", "GOOGLE_APPLICATION_CREDENTIALS")
+	viper.BindEnv("google.vision_api_key", "GOOGLE_VISION_API_KEY")                   //nolint:errcheck
+	viper.BindEnv("google.application_credentials", "GOOGLE_APPLICATION_CREDENTIALS") //nolint:errcheck
 
 	// Pinecone
-	_ = viper.BindEnv("pinecone.api_key", "PINECONE_API_KEY")
-	_ = viper.BindEnv("pinecone.host", "PINECONE_HOST")
-	_ = viper.BindEnv("pinecone.index_name", "PINECONE_INDEX_NAME")
-	_ = viper.BindEnv("pinecone.dimension", "PINECONE_DIMENSION")
-	_ = viper.BindEnv("pinecone.cloud", "PINECONE_CLOUD")
-	_ = viper.BindEnv("pinecone.region", "PINECONE_REGION")
-	_ = viper.BindEnv("pinecone.use_namespaces", "PINECONE_USE_NAMESPACES")
+	viper.BindEnv("pinecone.api_key", "PINECONE_API_KEY")               //nolint:errcheck
+	viper.BindEnv("pinecone.host", "PINECONE_HOST")                     //nolint:errcheck
+	viper.BindEnv("pinecone.index_name", "PINECONE_INDEX_NAME")         //nolint:errcheck
+	viper.BindEnv("pinecone.dimension", "PINECONE_DIMENSION")           //nolint:errcheck
+	viper.BindEnv("pinecone.cloud", "PINECONE_CLOUD")                   //nolint:errcheck
+	viper.BindEnv("pinecone.region", "PINECONE_REGION")                 //nolint:errcheck
+	viper.BindEnv("pinecone.use_namespaces", "PINECONE_USE_NAMESPACES") //nolint:errcheck
 
 	// GitHub
-	_ = viper.BindEnv("github.token", "GITHUB_TOKEN")
+	viper.BindEnv("github.token", "GITHUB_TOKEN") //nolint:errcheck
 
 	// App
-	_ = viper.BindEnv("app.data_directory", "DATA_DIRECTORY")
-	_ = viper.BindEnv("app.log_level", "LOG_LEVEL")
-	_ = viper.BindEnv("app.chunk_size", "CHUNK_SIZE")
-	_ = viper.BindEnv("app.chunk_overlap", "CHUNK_OVERLAP")
-	_ = viper.BindEnv("app.skip_existing_documents", "SKIP_EXISTING_DOCUMENTS")
+	viper.BindEnv("app.data_directory", "DATA_DIRECTORY")                   //nolint:errcheck
+	viper.BindEnv("app.log_level", "LOG_LEVEL")                             //nolint:errcheck
+	viper.BindEnv("app.chunk_size", "CHUNK_SIZE")                           //nolint:errcheck
+	viper.BindEnv("app.chunk_overlap", "CHUNK_OVERLAP")                     //nolint:errcheck
+	viper.BindEnv("app.skip_existing_documents", "SKIP_EXISTING_DOCUMENTS") //nolint:errcheck
 
 	// Redis
-	_ = viper.BindEnv("redis.host", "REDIS_HOST")
-	_ = viper.BindEnv("redis.port", "REDIS_PORT")
-	_ = viper.BindEnv("redis.password", "REDIS_PASSWORD")
+	viper.BindEnv("redis.host", "REDIS_HOST")         //nolint:errcheck
+	viper.BindEnv("redis.port", "REDIS_PORT")         //nolint:errcheck
+	viper.BindEnv("redis.password", "REDIS_PASSWORD") //nolint:errcheck
 
 	// Server
-	_ = viper.BindEnv("server.port", "SERVICE_PORT")
+	viper.BindEnv("server.port", "SERVICE_PORT") //nolint:errcheck
 
 	// Services
-	_ = viper.BindEnv("services.document_scanner_url", "DOCUMENT_SCANNER_URL")
-	_ = viper.BindEnv("services.content_extractor_url", "CONTENT_EXTRACTOR_URL")
-	_ = viper.BindEnv("services.vision_service_url", "VISION_SERVICE_URL")
-	_ = viper.BindEnv("services.summarization_service_url", "SUMMARIZATION_SERVICE_URL")
-	_ = viper.BindEnv("services.embedding_service_url", "EMBEDDING_SERVICE_URL")
-	_ = viper.BindEnv("services.vector_store_service_url", "VECTOR_STORE_SERVICE_URL")
-	_ = viper.BindEnv("services.query_service_url", "QUERY_SERVICE_URL")
-	_ = viper.BindEnv("services.orchestrator_service_url", "ORCHESTRATOR_SERVICE_URL")
+	viper.BindEnv("services.document_scanner_url", "DOCUMENT_SCANNER_URL")           //nolint:errcheck
+	viper.BindEnv("services.content_extractor_url", "CONTENT_EXTRACTOR_URL")         //nolint:errcheck
+	viper.BindEnv("services.vision_service_url", "VISION_SERVICE_URL")               //nolint:errcheck
+	viper.BindEnv("services.summarization_service_url", "SUMMARIZATION_SERVICE_URL") //nolint:errcheck
+	viper.BindEnv("services.embedding_service_url", "EMBEDDING_SERVICE_URL")         //nolint:errcheck
+	viper.BindEnv("services.vector_store_service_url", "VECTOR_STORE_SERVICE_URL")   //nolint:errcheck
+	viper.BindEnv("services.query_service_url", "QUERY_SERVICE_URL")                 //nolint:errcheck
+	viper.BindEnv("services.orchestrator_service_url", "ORCHESTRATOR_SERVICE_URL")   //nolint:errcheck
 }
 
 func validate(config *Config) error {
