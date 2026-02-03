@@ -25,7 +25,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Failed to initialize logger: %v\n", err)
 		os.Exit(1)
 	}
-	defer func() { _ = logger.Sync() }()
+	defer func() { _ = logger.Sync() }() //nolint:errcheck
 	logger.Info("Starting Vector Store",
 		zap.String("version", "1.0.0"),
 		zap.Int("port", 8086))
