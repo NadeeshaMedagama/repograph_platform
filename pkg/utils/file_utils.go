@@ -175,7 +175,7 @@ func ReadFile(filePath string) ([]byte, error) {
 
 // WriteFile writes data to a file
 func WriteFile(filePath string, data []byte) error {
-	return os.WriteFile(filePath, data, 0644)
+	return os.WriteFile(filePath, data, 0600)
 }
 
 // SanitizeFileName removes or replaces invalid characters in a filename
