@@ -115,13 +115,13 @@ func (c *Checker) checkAzureOpenAI(ctx context.Context) bool {
 	return resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusOK
 }
 
-func (c *Checker) checkPinecone(ctx context.Context) bool {
+func (c *Checker) checkPinecone(_ context.Context) bool {
 	// For now, just check if API key is configured
 	// In a real implementation, you'd make an API call to Pinecone
 	return c.pineconeAPIKey != ""
 }
 
-func (c *Checker) checkGoogleVision(ctx context.Context) bool {
+func (c *Checker) checkGoogleVision(_ context.Context) bool {
 	// For now, just check if API key is configured
 	// In a real implementation, you'd make an API call to Google Vision
 	return c.googleVisionKey != ""
