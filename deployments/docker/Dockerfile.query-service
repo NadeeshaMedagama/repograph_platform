@@ -1,0 +1,18 @@
+# Multi-stage build
+FROM golang:1.21-alpine AS builder
+RUN apk add --no-cache git make gcc musl-dev
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /bin/service ./cmd/query-service
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /app
+COPY --from=builder /bin/service /app/service
+COPY configs/ /app/configs/
+RUN addgroup -g 1000 repograph && adduser -D -u 1000 -G repograph repograph && chown -R repograph:repograph /app
+USER repograph
+EXPOSE 8087
+HEALTHCHECK --interval=30s --timeout=3s CMD wget --no-verbose --tries=1 --spider http://localhost:8087/health || exit 1
+ENTRYPOINT ["/app/service"]
