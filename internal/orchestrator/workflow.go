@@ -145,6 +145,8 @@ func (dp *DocumentProcessor) scanDirectory(directory string) ([]string, error) {
 }
 
 // processFile processes a single file
+//
+//nolint:gocyclo
 func (dp *DocumentProcessor) processFile(ctx context.Context, filePath string) error {
 	// Calculate file hash
 	fileHash, err := dp.calculateFileHash(filePath)
@@ -154,9 +156,9 @@ func (dp *DocumentProcessor) processFile(ctx context.Context, filePath string) e
 
 	// Check if already indexed
 	if dp.config.App.SkipExistingDocuments {
-		exists, err := dp.pineconeClient.CheckDocumentExists(ctx, fileHash)
-		if err != nil {
-			dp.logger.Warn("Failed to check document existence", zap.Error(err))
+		exists, existsErr := dp.pineconeClient.CheckDocumentExists(ctx, fileHash)
+		if existsErr != nil {
+			dp.logger.Warn("Failed to check document existence", zap.Error(existsErr))
 		} else if exists {
 			return fmt.Errorf("file already indexed")
 		}
@@ -176,9 +178,10 @@ func (dp *DocumentProcessor) processFile(ctx context.Context, filePath string) e
 	// Analyze image if applicable
 	visualContent := ""
 	if dp.isImageFile(filePath) && dp.visionClient != nil {
-		visualContent, err = dp.visionClient.AnalyzeImage(ctx, filePath)
-		if err != nil {
-			dp.logger.Warn("Failed to analyze image", zap.Error(err))
+		var visionErr error
+		visualContent, visionErr = dp.visionClient.AnalyzeImage(ctx, filePath)
+		if visionErr != nil {
+			dp.logger.Warn("Failed to analyze image", zap.Error(visionErr))
 		}
 	}
 
@@ -205,11 +208,11 @@ func (dp *DocumentProcessor) processFile(ctx context.Context, filePath string) e
 	vectors := make([]*pinecone.Vector, 0, len(chunks))
 	for i, chunk := range chunks {
 		// Generate embedding
-		embedding, err := dp.azureClient.GenerateEmbedding(ctx, chunk)
-		if err != nil {
+		chunkEmbedding, embErr := dp.azureClient.GenerateEmbedding(ctx, chunk)
+		if embErr != nil {
 			dp.logger.Error("Failed to generate embedding",
 				zap.Int("chunk", i),
-				zap.Error(err))
+				zap.Error(embErr))
 			continue
 		}
 
@@ -217,7 +220,7 @@ func (dp *DocumentProcessor) processFile(ctx context.Context, filePath string) e
 		vectorID := fmt.Sprintf("%s-chunk-%d", docID, i)
 		vector := &pinecone.Vector{
 			ID:     vectorID,
-			Values: embedding,
+			Values: chunkEmbedding,
 			Metadata: map[string]interface{}{
 				"document_id": docID,
 				"file_name":   filepath.Base(filePath),
