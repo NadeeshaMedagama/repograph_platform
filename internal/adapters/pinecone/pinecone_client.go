@@ -71,10 +71,10 @@ type QueryMatch struct {
 // NewPineconeClient creates a new Pinecone client
 func NewPineconeClient(cfg *config.Config, logger *zap.Logger) (*PineconeClient, error) {
 	if cfg.Pinecone.APIKey == "" {
-		return nil, fmt.Errorf("Pinecone API key is required")
+		return nil, fmt.Errorf("pinecone API key is required")
 	}
 	if cfg.Pinecone.IndexName == "" {
-		return nil, fmt.Errorf("Pinecone index name is required")
+		return nil, fmt.Errorf("pinecone index name is required")
 	}
 
 	httpClient := &http.Client{}
