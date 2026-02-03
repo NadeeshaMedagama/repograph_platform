@@ -51,7 +51,11 @@ func Sync() error {
 func WithFields(fields ...zap.Field) *zap.Logger {
 	if Log == nil {
 		// Fallback to basic logger if not initialized
-		logger, _ := zap.NewProduction()
+		logger, err := zap.NewProduction()
+		if err != nil {
+			// If we can't create a production logger, create a no-op logger
+			return zap.NewNop().With(fields...)
+		}
 		return logger.With(fields...)
 	}
 	return Log.With(fields...)
