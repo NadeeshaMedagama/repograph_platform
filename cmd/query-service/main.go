@@ -3,15 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/nadeeshame/repograph_platform/internal/config"
-	"github.com/nadeeshame/repograph_platform/internal/logger"
-	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/nadeeshame/repograph_platform/internal/config"
+	"github.com/nadeeshame/repograph_platform/internal/logger"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -24,7 +25,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Failed to initialize logger: %v\n", err)
 		os.Exit(1)
 	}
-	defer logger.Sync()
+	defer func() { _ = logger.Sync() }()
 	logger.Info("Starting Query Service",
 		zap.String("version", "1.0.0"),
 		zap.Int("port", 8087))
