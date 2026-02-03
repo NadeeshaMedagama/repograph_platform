@@ -31,7 +31,7 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to initialize logger: %w", err)
 	}
-	defer func() { _ = logger.Sync() }()
+	defer func() { _ = logger.Sync() }() //nolint:errcheck
 
 	// Load configuration
 	cfg, err := config.Load()
