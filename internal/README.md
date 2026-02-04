@@ -1,6 +1,6 @@
 # Service Implementations
 
-This directory contains the service implementation code for RepoGraph Platform microservices.
+This directory contains the service implementation code for RAG Knowledge Service microservices.
 
 ## Directories
 
