@@ -127,6 +127,10 @@ jobs:
         with:
           ref: ${{ needs.create-release.outputs.tag }}
 
+      - name: Set image name to lowercase
+        id: image_name
+        run: echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -144,8 +148,8 @@ jobs:
           file: ./deployments/docker/Dockerfile.${{ matrix.service }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-${{ matrix.service }}:${{ needs.create-release.outputs.version }}
-            ghcr.io/${{ github.repository }}-${{ matrix.service }}:latest
+            ghcr.io/${{ steps.image_name.outputs.IMAGE_NAME }}-${{ matrix.service }}:${{ needs.create-release.outputs.version }}
+            ghcr.io/${{ steps.image_name.outputs.IMAGE_NAME }}-${{ matrix.service }}:latest
           labels: |
             org.opencontainers.image.title=${{ matrix.service }}
             org.opencontainers.image.description=RAG Knowledge Service ${{ matrix.service }}
