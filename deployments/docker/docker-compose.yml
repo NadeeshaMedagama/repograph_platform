@@ -1,26 +1,26 @@
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: repograph-postgres
+    container_name: ragknowledge-postgres
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-repograph}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-repograph}
-      POSTGRES_DB: ${POSTGRES_DB:-repograph_db}
+      POSTGRES_USER: ${POSTGRES_USER:-ragknowledge}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ragknowledge}
+      POSTGRES_DB: ${POSTGRES_DB:-rag_knowledge_db}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U repograph"]
+      test: ["CMD-SHELL", "pg_isready -U ragknowledge"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
-      - repograph-network
+      - ragknowledge-network
 
   redis:
     image: redis:7-alpine
-    container_name: repograph-redis
+    container_name: ragknowledge-redis
     ports:
       - "6379:6379"
     volumes:
@@ -31,13 +31,13 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - repograph-network
+      - ragknowledge-network
 
   document-scanner:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.document-scanner
-    container_name: repograph-document-scanner
+    container_name: ragknowledge-document-scanner
     ports:
       - "8081:8081"
     environment:
@@ -53,14 +53,14 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   content-extractor:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.content-extractor
-    container_name: repograph-content-extractor
+    container_name: ragknowledge-content-extractor
     ports:
       - "8082:8082"
     environment:
@@ -76,14 +76,14 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   vision-service:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.vision-service
-    container_name: repograph-vision-service
+    container_name: ragknowledge-vision-service
     ports:
       - "8083:8083"
     environment:
@@ -95,14 +95,14 @@ services:
     volumes:
       - ../../credentials:/app/credentials:ro
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   summarization-service:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.summarization-service
-    container_name: repograph-summarization-service
+    container_name: ragknowledge-summarization-service
     ports:
       - "8084:8084"
     environment:
@@ -111,14 +111,14 @@ services:
     env_file:
       - ../../.env
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   embedding-service:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.embedding-service
-    container_name: repograph-embedding-service
+    container_name: ragknowledge-embedding-service
     ports:
       - "8085:8085"
     environment:
@@ -127,14 +127,14 @@ services:
     env_file:
       - ../../.env
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   vector-store:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.vector-store
-    container_name: repograph-vector-store
+    container_name: ragknowledge-vector-store
     ports:
       - "8086:8086"
     environment:
@@ -150,14 +150,14 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   query-service:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.query-service
-    container_name: repograph-query-service
+    container_name: ragknowledge-query-service
     ports:
       - "8087:8087"
     environment:
@@ -173,14 +173,14 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
   orchestrator:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile.orchestrator
-    container_name: repograph-orchestrator
+    container_name: ragknowledge-orchestrator
     ports:
       - "8088:8088"
     environment:
@@ -208,7 +208,7 @@ services:
       - vector-store
       - query-service
     networks:
-      - repograph-network
+      - ragknowledge-network
     restart: unless-stopped
 
 volumes:
@@ -218,5 +218,5 @@ volumes:
     driver: local
 
 networks:
-  repograph-network:
+  ragknowledge-network:
     driver: bridge
