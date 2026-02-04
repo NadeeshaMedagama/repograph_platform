@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/nadeeshame/repograph_platform/internal/domain/models"
+	"github.com/nadeeshame/rag-knowledge-service/internal/domain/models"
 )
 
 // DocumentScanner is responsible for scanning and discovering files
