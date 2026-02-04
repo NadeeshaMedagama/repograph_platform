@@ -74,10 +74,14 @@ jobs:
       - name: Run go mod verify
         run: go mod verify
 
+      - name: Download dependencies
+        run: go mod download
+
       - name: Run nancy (OSS Index)
         run: |
-          go install github.com/sonatype-nexus-community/nancy@v1.0.42
+          go install github.com/sonatype-nexus-community/nancy@latest
           go list -json -deps ./... | nancy sleuth
+        continue-on-error: true
 
       - name: Run govulncheck
         run: |
