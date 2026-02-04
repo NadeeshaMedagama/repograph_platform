@@ -16,10 +16,10 @@ WORKDIR /app
 ARG SERVICE_NAME
 COPY --from=builder /bin/${SERVICE_NAME} /app/service
 COPY configs/ /app/configs/
-RUN addgroup -g 1000 repograph && \
-    adduser -D -u 1000 -G repograph repograph && \
-    chown -R repograph:repograph /app
-USER repograph
+RUN addgroup -g 1000 ragknowledge && \
+    adduser -D -u 1000 -G ragknowledge ragknowledge && \
+    chown -R ragknowledge:ragknowledge /app
+USER ragknowledge
 ARG SERVICE_PORT=8080
 EXPOSE ${SERVICE_PORT}
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
