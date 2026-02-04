@@ -376,6 +376,7 @@ rag-knowledge-service/
 | [API Reference](docs/API_REFERENCE.md) | Service APIs and interfaces |
 | [Deployment Guide](docs/DEPLOYMENT.md) | Production deployment instructions |
 | [Development Guide](docs/DEVELOPMENT.md) | Local development setup and guidelines |
+| [CodeQL Troubleshooting](docs/CODEQL_TROUBLESHOOTING.md) | Fix CodeQL workflow issues |
 
 ---
 
