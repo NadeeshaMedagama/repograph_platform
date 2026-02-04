@@ -14,12 +14,12 @@ After all the automated fixes, you need to complete these manual steps:
 ### After Renaming:
 ```bash
 # Update your local git remote
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag_knowledge_service
 git remote set-url origin https://github.com/NadeeshaMedagama/rag-knowledge-service.git
 
 # Optional: Rename local directory
 cd /home/nadeeshame/go
-mv repograph_platform rag-knowledge-service
+mv rag_knowledge_service rag-knowledge-service
 cd rag-knowledge-service
 ```
 
