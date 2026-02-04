@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/nadeeshame/repograph_platform/internal/adapters/azure"
-	"github.com/nadeeshame/repograph_platform/internal/adapters/google"
-	"github.com/nadeeshame/repograph_platform/internal/adapters/pinecone"
-	"github.com/nadeeshame/repograph_platform/internal/config"
-	"github.com/nadeeshame/repograph_platform/internal/content-extractor/processors"
+	"github.com/nadeeshame/rag-knowledge-service/internal/adapters/azure"
+	"github.com/nadeeshame/rag-knowledge-service/internal/adapters/google"
+	"github.com/nadeeshame/rag-knowledge-service/internal/adapters/pinecone"
+	"github.com/nadeeshame/rag-knowledge-service/internal/config"
+	"github.com/nadeeshame/rag-knowledge-service/internal/content-extractor/processors"
 	"go.uber.org/zap"
 )
 
