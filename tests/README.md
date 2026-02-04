@@ -1,6 +1,6 @@
 # Tests
 
-This directory contains tests for RepoGraph Platform.
+This directory contains tests for RAG Knowledge Service.
 
 ## Structure (To Be Implemented)
 
