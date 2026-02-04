@@ -18,7 +18,7 @@
 
 ```bash
 # Clone the repository
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag-knowledge-service
 
 # Run setup script
 ./scripts/setup.sh
@@ -48,7 +48,7 @@ make test
 ## Project Structure
 
 ```
-repograph_platform/
+rag-knowledge-service/
 ├── cmd/                      # Service entry points
 │   ├── orchestrator/        # Main orchestrator
 │   ├── document-scanner/    # File scanning service
