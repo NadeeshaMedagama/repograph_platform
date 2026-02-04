@@ -23,7 +23,7 @@ AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT=text-embedding-ada-002
 AZURE_OPENAI_CHAT_DEPLOYMENT=gpt-4
 PINECONE_API_KEY=your_actual_key_here
-PINECONE_INDEX_NAME=repograph-platform
+PINECONE_INDEX_NAME=rag-knowledge-service
 # Optional (for image analysis):
 GOOGLE_VISION_API_KEY=your_key_here
 ```
