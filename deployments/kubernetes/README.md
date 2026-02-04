@@ -1,6 +1,6 @@
 # Kubernetes Deployment Manifests
 
-This directory will contain Kubernetes deployment manifests for RepoGraph Platform.
+This directory will contain Kubernetes deployment manifests for RAG Knowledge Service.
 
 ## Structure (To Be Created)
 
