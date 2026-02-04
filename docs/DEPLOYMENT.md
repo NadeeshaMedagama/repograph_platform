@@ -40,7 +40,7 @@
 ### 1. Clone and Setup
 
 ```bash
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag-knowledge-service
 
 # Copy environment file
 cp .env.example .env
