@@ -2,7 +2,7 @@
 
 ## Problem
 ```
-nadeeshame@nadeeshame:~/go/repograph_platform$ docker-compose up -d
+nadeeshame@nadeeshame:~/go/rag-knowledge-service$ docker-compose up -d
 no configuration file provided: not found
 ```
 
@@ -12,7 +12,7 @@ The `docker-compose.yml` file was referenced in documentation but never actually
 ## Solution Applied
 
 ### 1. Created docker-compose.yml ✅
-**Location**: `/home/nadeeshame/go/repograph_platform/docker-compose.yml`
+**Location**: `/home/nadeeshame/go/rag-knowledge-service/docker-compose.yml`
 
 **Contents**:
 - Redis cache (port 6379) - for caching only
@@ -131,7 +131,7 @@ docker-compose restart orchestrator
 
 ```bash
 # Navigate to project
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag-knowledge-service
 
 # Verify docker-compose.yml exists
 ls -la docker-compose.yml
@@ -179,7 +179,7 @@ nano .env
 
 ```bash
 # Make sure you're in the project directory
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag-knowledge-service
 
 # Create .env file (if not done)
 cp .env.example .env
@@ -189,8 +189,8 @@ cp .env.example .env
 docker-compose up -d
 
 # Expected output:
-# Creating network "repograph_platform_repograph-network" ... done
-# Creating volume "repograph_platform_redis_data" ... done
+# Creating network "rag-knowledge-service_repograph-network" ... done
+# Creating volume "rag-knowledge-service_redis_data" ... done
 # Creating repograph-redis    ... done
 # Creating repograph-document-scanner ... done
 # (etc.)
