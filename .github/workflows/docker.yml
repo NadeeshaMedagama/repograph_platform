@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run Hadolint
         uses: hadolint/hadolint-action@v3.3.0
@@ -39,7 +39,7 @@ jobs:
         service: [orchestrator, document-scanner, content-extractor, vision-service, summarization-service, embedding-service, vector-store, query-service]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set image name to lowercase
         id: image_name
@@ -86,7 +86,7 @@ jobs:
     needs: build-and-scan
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create .env file
         run: |
