@@ -33,7 +33,7 @@
 ## Testing
 ```bash
 # Test if config builds
-cd /home/nadeeshame/go/repograph_platform
+cd /home/nadeeshame/go/rag-knowledge-service
 go build ./internal/config/
 # Expected: No errors (✅ Confirmed)
 ```
