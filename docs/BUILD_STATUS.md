@@ -94,7 +94,7 @@ Ready for semantic search!
 
 **Status**: 🟢 PRODUCTION READY
 
-The RepoGraph Platform is now fully functional. When you run `docker-compose up -d`:
+The RAG Knowledge Service is now fully functional. When you run `docker-compose up -d`:
 1. All 8 microservices + Redis start
 2. Orchestrator automatically scans `./data/diagrams`
 3. Files are processed, summarized, and embedded
