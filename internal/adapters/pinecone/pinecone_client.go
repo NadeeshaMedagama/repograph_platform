@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/nadeeshame/repograph_platform/internal/config"
+	"github.com/nadeeshame/rag-knowledge-service/internal/config"
 	"go.uber.org/zap"
 )
 
