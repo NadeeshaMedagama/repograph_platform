@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nadeeshame/repograph_platform/internal/config"
-	"github.com/nadeeshame/repograph_platform/internal/logger"
+	"github.com/nadeeshame/rag-knowledge-service/internal/config"
+	"github.com/nadeeshame/rag-knowledge-service/internal/logger"
 	"go.uber.org/zap"
 )
 
