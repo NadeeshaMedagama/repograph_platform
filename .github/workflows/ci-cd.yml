@@ -181,7 +181,7 @@ jobs:
     if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
     environment:
       name: staging
-      url: https://staging.repograph.example.com
+      url: https://staging.rag-knowledge-service.example.com
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -198,7 +198,7 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     environment:
       name: production
-      url: https://repograph.example.com
+      url: https://rag-knowledge-service.example.com
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
