@@ -354,10 +354,10 @@ chmod 644 credentials/*.json
 
 ## Next Steps
 
-1. ✅ Services running? → Read [ARCHITECTURE.md](docs/ARCHITECTURE.md)
-2. ✅ Want to develop? → Read [DEVELOPMENT.md](docs/DEVELOPMENT.md)
-3. ✅ Ready to deploy? → Read [DEPLOYMENT.md](docs/DEPLOYMENT.md)
-4. ✅ Need API details? → Read [API_REFERENCE.md](docs/API_REFERENCE.md)
+1. ✅ Services running? → Read [ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md)
+2. ✅ Want to develop? → Read [DEVELOPMENT.md](docs/development/DEVELOPMENT.md)
+3. ✅ Ready to deploy? → Read [DEPLOYMENT.md](docs/deployment/DEPLOYMENT.md)
+4. ✅ Need API details? → Read [API_REFERENCE.md](docs/api/API_REFERENCE.md)
 
 ## Health Check Dashboard
 
