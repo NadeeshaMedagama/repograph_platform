@@ -42,7 +42,7 @@ jobs:
           fi
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -123,7 +123,7 @@ jobs:
         service: [orchestrator, document-scanner, content-extractor, vision-service, summarization-service, embedding-service, vector-store, query-service]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.create-release.outputs.tag }}
 
